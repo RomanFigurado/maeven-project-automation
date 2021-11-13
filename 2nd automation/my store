@@ -1,1 +1,83 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+
+public class CourseWork {
+
+    ChromeDriver driver;
+
+    @BeforeClass()
+    public void setup() {
+        WebDriverManager.chromedriver().browserVersion("94.0.4606.81").setup();
+        driver = new ChromeDriver();
+    }
+
+    @Test
+    public void executeTest() {
+        String givenUrl = "http://automationpractice.com/index.php";
+        driver.get(givenUrl);
+        String currentUrl = driver.getCurrentUrl();
+
+        Assert.assertEquals(currentUrl, givenUrl);
+
+        WebElement btnLogin = driver.findElement(By.xpath("//div[@class=\"header_user_info\"]/a[@class=\"login\"]"));
+        btnLogin.click();
+
+        WebElement userName = driver.findElement(By.name("email"));
+        userName.sendKeys("roman.20212069@iit.ac.lk");
+
+        WebElement passWord = driver.findElement(By.id("passwd"));
+        passWord.sendKeys("roman.20212069@iit.ac.lk");
+
+        WebElement btnlogin = driver.findElement(By.name("SubmitLogin"));
+        btnlogin.click();
+
+        WebElement product1 = driver.findElement(By.xpath("//li/a[@title=\"Women\"]"));
+        product1.click();
+
+        WebElement selection1 = driver.findElement(By.xpath("//img[@class=\"replace-2x img-responsive\"][@title=\"Faded Short Sleeve T-shirts\"]"));
+        selection1.click();
+
+        String selection1Name = driver.findElement(By.xpath("//h1")).getText();
+        String givenselection1Name = "Faded Short Sleeve T-shirts";
+        Assert.assertEquals(selection1Name, givenselection1Name);
+
+
+        String selection1Price = driver.findElement(By.xpath("//span[@id=\"our_price_display\"]")).getText();
+        String givenselection1Price = "$16.51";
+        Assert.assertEquals(selection1Price, givenselection1Price);
+
+        WebElement addToCart1 = driver.findElement(By.xpath("//button[@class=\"exclusive\"]"));
+        addToCart1.click();
+
+        WebDriverWait waiting = new WebDriverWait(driver,20);
+        WebElement continueShop = waiting.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class=\"continue btn btn-default button exclusive-medium\"]")));
+        continueShop.click();
+
+        WebElement clickWomen = driver.findElement(By.xpath("//div/a[@title=\"Women\"]"));
+        clickWomen.click();
+
+        WebElement selection2 = driver.findElement(By.xpath("//img[@class=\"replace-2x img-responsive\"][@title=\"Blouse\"]"));
+        selection2.click();
+
+        WebElement addToCart2 = driver.findElement(By.name("Submit"));
+        addToCart2.click();
+
+    }
+}
+
+//To be coninued"update soon"
+
+
+
+
+
+
 
